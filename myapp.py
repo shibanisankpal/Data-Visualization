@@ -26,20 +26,17 @@ def main():
         visualization_options = {
             "Histogram": histogram,
             "Pie Chart": pie_chart,
-            "Scatter Plot": scatter_plot,
-            "Count Plot": count_plot
+            "Count Plot": count_plot,
+            "Bar Chart": bar_chart
         }
 
         selected_options = []
         selected_columns = []
         for option in visualization_options.keys():
-            if option != "Scatter Plot" and st.checkbox(option):
+            if st.checkbox(option):
                 selected_options.append(option)
                 column = st.selectbox(f"Select a column for {option}", data.columns)
                 selected_columns.append(column)
-            elif option == "Scatter Plot" and st.checkbox(option):
-                selected_options.append(option)
-                selected_columns.append(None)
 
         if selected_options:
             for option, column in zip(selected_options, selected_columns):
@@ -57,21 +54,16 @@ def pie_chart(data, column):
     ax_pie.set_ylabel("")
     st.pyplot(fig_pie)
 
-
-def scatter_plot(data):
-    column_x = st.selectbox("Select X-axis column", data.columns)
-    column_y = st.selectbox("Select Y-axis column", data.columns)
-    fig_scatter, ax_scatter = plt.subplots(figsize=(8, 6))
-    ax_scatter.scatter(data[column_x], data[column_y])
-    ax_scatter.set_xlabel(column_x)
-    ax_scatter.set_ylabel(column_y)
-    st.pyplot(fig_scatter)
-
-def count_plot(data):
-    column_count = st.selectbox("Select a column for count plot", data.columns)
+def count_plot(data, column):
     fig_count, ax_count = plt.subplots(figsize=(10, 6))
-    sns.countplot(data[column_count])
+    sns.countplot(data[column])
     st.pyplot(fig_count)
+
+def bar_chart(data, column):
+    fig_bar, ax_bar = plt.subplots(figsize=(10, 6))
+    ax_bar = sns.barplot(data=data, x=data.index, y=column)
+    ax_bar.set_xticklabels(ax_bar.get_xticklabels(), rotation=45, ha="right")
+    st.pyplot(fig_bar)
 
 if __name__ == "__main__":
     main()
