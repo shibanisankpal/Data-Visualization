@@ -25,7 +25,7 @@ def main():
 
         visualization_options = {
             "Histogram": histogram,
-            "Bar Plot": bar_plot,
+            "Pie Chart": pie_chart,
             "Scatter Plot": scatter_plot,
             "Count Plot": count_plot
         }
@@ -48,10 +48,11 @@ def histogram(data, column):
     ax_hist.hist(data[column].dropna())
     st.pyplot(fig_hist)
 
-def bar_plot(data, column):
-    fig_bar, ax_bar = plt.subplots(figsize=(10, 6))
-    sns.countplot(data[column])
-    st.pyplot(fig_bar)
+def pie_chart(data, column):
+    fig_pie, ax_pie = plt.subplots()
+    data[column].value_counts().plot.pie(autopct='%1.1f%%')
+    ax_pie.set_ylabel("")
+    st.pyplot(fig_pie)
 
 def scatter_plot(data, column):
     column_x = st.selectbox("Select X-axis column", data.select_dtypes(include="number").columns)
