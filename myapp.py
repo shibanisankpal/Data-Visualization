@@ -38,7 +38,7 @@ def main():
             st.write("Invalid file format. Please upload a CSV or Excel file.")
             st.write("Uploaded file type:", uploaded_file.type)
             st.write("File contents:")
-            st.write(uploaded_file.getvalue().decode())
+            st.write(uploaded_file.getvalue())
             st.write("File length:", len(uploaded_file.getvalue()))
 
 def read_data(file):
