@@ -1,7 +1,7 @@
 # Data-Visualization
 
 
-This Streamlit-based dashboard application allows users to upload a custom CSV or Excel dataset and visualize it using different types of plots.
+This Streamlit-based dashboard application allows users to upload a CSV or Excel dataset and visualize it using different types of plots.
 
 ## Link to application
 [Custom Dataset Dashboard](https://data-visualization-03udsru5kuy9.streamlit.app/)
