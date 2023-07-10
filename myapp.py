@@ -55,14 +55,18 @@ def pie_chart(data, column):
     st.pyplot(fig_pie)
 
 def scatter_plot(data, column):
-    column_x = st.selectbox("Select X-axis column", data.select_dtypes(include="number").columns)
+    column_x = st.selectbox("Select X-axis column", data.columns)
+    column_y = st.selectbox("Select Y-axis column", data.columns)
     fig_scatter, ax_scatter = plt.subplots(figsize=(8, 6))
-    sns.scatterplot(data=data, x=column_x, y=column)
+    ax_scatter.scatter(data[column_x], data[column_y])
+    ax_scatter.set_xlabel(column_x)
+    ax_scatter.set_ylabel(column_y)
     st.pyplot(fig_scatter)
 
-def count_plot(data, column):
+def count_plot(data):
+    column_count = st.selectbox("Select a column for count plot", data.columns)
     fig_count, ax_count = plt.subplots(figsize=(10, 6))
-    sns.countplot(data[column])
+    sns.countplot(data[column_count])
     st.pyplot(fig_count)
 
 if __name__ == "__main__":
