@@ -26,22 +26,16 @@ def main():
         visualization_options = {
             "Histogram": histogram,
             "Pie Chart": pie_chart,
-            "Count Plot": count_plot,
-            "Bar Chart": bar_chart
+            "Count Plot": count_plot
         }
 
-        selected_options = []
-        selected_columns = []
         for option in visualization_options.keys():
-            if st.checkbox(option):
-                selected_options.append(option)
-                column = st.selectbox(f"Select a column for {option}", data.columns)
-                selected_columns.append(column)
-
-        if selected_options:
-            for option, column in zip(selected_options, selected_columns):
-                st.subheader(option)
-                visualization_options[option](data, column)
+            num_visualizations = st.number_input(f"Number of {option}s", min_value=1, value=1, step=1)
+            if num_visualizations > 0:
+                for i in range(num_visualizations):
+                    st.subheader(f"{option} {i+1}")
+                    column = st.selectbox(f"Select a column for {option} {i+1}", data.columns)
+                    visualization_options[option](data, column)
 
 def histogram(data, column):
     fig_hist, ax_hist = plt.subplots()
@@ -55,15 +49,10 @@ def pie_chart(data, column):
     st.pyplot(fig_pie)
 
 def count_plot(data, column):
-    fig_count, ax_count = plt.subplots(figsize=(10, 6))
+    fig_count, ax_count = plt.subplots()
     sns.countplot(data[column])
     st.pyplot(fig_count)
 
-def bar_chart(data, column):
-    fig_bar, ax_bar = plt.subplots(figsize=(10, 6))
-    ax_bar = sns.barplot(data=data, x=data.index, y=column)
-    ax_bar.set_xticklabels(ax_bar.get_xticklabels(), rotation=45, ha="right")
-    st.pyplot(fig_bar)
-
 if __name__ == "__main__":
     main()
+
