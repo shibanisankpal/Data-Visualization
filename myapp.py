@@ -79,5 +79,3 @@ def count_plot(data, column):
 
 if __name__ == "__main__":
     main()
-
-
