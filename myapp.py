@@ -12,7 +12,11 @@ def main():
         if uploaded_file.type == "text/csv":
             data = pd.read_csv(uploaded_file, encoding='utf-8')
         elif uploaded_file.type == "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet":
-            data = pd.read_excel(uploaded_file, engine='openpyxl')
+            try:
+                data = pd.read_excel(uploaded_file)
+            except Exception as e:
+                st.write("Error reading Excel file:", str(e))
+                return
         else:
             st.write("Invalid file format. Please upload a CSV or Excel file.")
             return
@@ -55,3 +59,4 @@ def count_plot(data, column):
 
 if __name__ == "__main__":
     main()
+
